@@ -1,0 +1,9 @@
+docs
+scripts
+test
+test-samples
+samples
+coverage
+.nyc_output
+*.log
+src
