@@ -255,9 +255,11 @@ const handleBinaryExpression: NodePrinter<BinaryExpression> = () => {
   throw new Error("");
 };
 
-const handleLogicalExpression: NodePrinter<LogicalExpression> = () => {
-  throw new Error("");
-};
+const handleLogicalExpression: NodePrinter<LogicalExpression> = ({
+  path,
+  print,
+  node,
+}) => [path.call(print, "left"), node.operator, path.call(print, "right")];
 
 const handleArrayExpression: NodePrinter<ArrayExpression> = ({
   path,

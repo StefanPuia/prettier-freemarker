@@ -7,3 +7,13 @@ exports[`Format: assignments.ftl: assignments.ftl 1`] = `
 <#assign string = " string example "/>
 <#assign number = 1/>
 `;
+
+exports[`Format: complex.ftl: complex.ftl 1`] = `
+ <#if  someVar.someProp.subProp??   &&	someVar?has_content>
+ 		<p name="foo"
+  class="classname">	Text</p>
+				</#if>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<#if someVar.someProp.subProp?? && someVar?has_content>
+  <p name="foo" class="classname">Text</p>
+</#if>
+`;
