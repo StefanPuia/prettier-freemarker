@@ -11,11 +11,16 @@ const genericPrint: PrintFn = (
   const node = path.getValue();
 
   if (Array.isArray(node)) {
-    return [path.map(print)];
+    return path.map(print);
   }
 
   if (node.type in printers) {
-    return printers[node.type]({ node, print, options, path });
+    try {
+      return printers[node.type]({ node, print, options, path });
+    } catch (err) {
+      console.trace(err);
+      console.error(node);
+    }
   }
 
   throw new Error(

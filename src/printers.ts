@@ -20,6 +20,7 @@ import type {
   MemberExpression,
   NodeTypes,
   ParamNames,
+  ProgramNode,
   TextNode,
   UnaryExpression,
   UpdateExpression,
@@ -28,26 +29,28 @@ import { NodePrinter } from "./types";
 
 const docBuilders = prettier.doc.builders;
 
-const { join, hardline, line, group, indent, markAsRoot } = docBuilders;
+const { join, softline, hardline, line, group, indent, dedent, breakParent } =
+  docBuilders;
 
-const handleProgram: NodePrinter<AbstractNode> = () => {
-  throw new Error("");
-};
+const handleProgram: NodePrinter<ProgramNode> = ({ path, print }) => [
+  group(path.map(print, "body"), { shouldBreak: true }),
+  softline,
+];
 
 const handleElse: NodePrinter<AbstractNode> = () => {
   throw new Error("");
 };
 
-const handleCondition: NodePrinter<Condition> = ({ path, print }) =>
-  markAsRoot(
-    group([
-      "<#if ",
-      path.call(print, "params"),
-      ">",
-      indent(path.map(print, "consequent")),
-      "</#if>",
-    ]),
-  );
+const handleCondition: NodePrinter<Condition> = ({ path, print }) => [
+  group([
+    "<#if",
+    group([line, indent(path.call(print, "params"))]),
+    dedent(">"),
+    group(indent([hardline, path.call(print, "consequent")])),
+    dedent([hardline, "</#if>"]),
+  ]),
+  softline,
+];
 
 const handleConditionElse: NodePrinter<AbstractNode> = () => {
   throw new Error("");
@@ -67,12 +70,11 @@ const handleList: NodePrinter<List> = ({ path, print }) => [
   "</#list>",
 ];
 
-const handleText: NodePrinter<TextNode> = ({ node }) => node.text;
+const handleText: NodePrinter<TextNode> = ({ node }) => node.text.trim();
 
 const handleAssign: NodePrinter<Assign> = ({ path, print }) => [
-  "<#assign ",
-  path.call(print, "params"),
-  "/>",
+  group(["<#assign ", path.call(print, "params"), "/>"]),
+  softline,
 ];
 
 const handleGlobal: NodePrinter<AbstractNode> = () => {
@@ -111,7 +113,7 @@ const handleRecover: NodePrinter<AbstractNode> = () => {
 
 const handleComment: NodePrinter<Comment> = ({ node }) => [
   "<#-- ",
-  node.text,
+  node.text.trim(),
   " -->",
 ];
 
@@ -251,15 +253,30 @@ const handleUnaryExpression: NodePrinter<UnaryExpression> = ({
   print,
 }) => [path.call(print, "argument"), "??"];
 
-const handleBinaryExpression: NodePrinter<BinaryExpression> = () => {
-  throw new Error("");
-};
+const handleBinaryExpression: NodePrinter<BinaryExpression> = ({
+  path,
+  print,
+  node,
+}) =>
+  group([
+    path.call(print, "left"),
+    " ",
+    node.operator,
+    " ",
+    path.call(print, "right"),
+  ]);
 
 const handleLogicalExpression: NodePrinter<LogicalExpression> = ({
   path,
   print,
   node,
-}) => [path.call(print, "left"), node.operator, path.call(print, "right")];
+}) => [
+  path.call(print, "left"),
+  " ",
+  node.operator,
+  " ",
+  path.call(print, "right"),
+];
 
 const handleArrayExpression: NodePrinter<ArrayExpression> = ({
   path,

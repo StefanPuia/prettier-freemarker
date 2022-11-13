@@ -1,2 +1,1 @@
-<#assign string   = " string example " />
-<#assign number =  1   />
+<#assign string   = " string example " /><#assign number =  1   />
