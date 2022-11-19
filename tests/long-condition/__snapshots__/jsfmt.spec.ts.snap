@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Format: long-condition.ftl: long-condition.ftl 1`] = `
+ <#if  someVar.someProp.subProp   &&	someVar && someVar1.someProp.subProp   &&	someVar1 && someVar2.someProp.subProp   &&	someVar2 && someVar3.someProp.subProp   &&	someVar3>
+  <p name="foo" class="classname">Text</p>
+    </#if>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<#if someVar.someProp.subProp && someVar && someVar1.someProp.subProp && someVar1 && someVar2.someProp.subProp && someVar2 && someVar3.someProp.subProp && someVar3>
+  <p name="foo" class="classname">Text</p>
+</#if>
+
+`;

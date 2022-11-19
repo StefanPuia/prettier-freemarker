@@ -29,27 +29,50 @@ import { NodePrinter } from "./types";
 
 const docBuilders = prettier.doc.builders;
 
-const { join, softline, hardline, line, group, indent, dedent, breakParent } =
+const { join, breakParent, softline, hardline, line, group, indent, dedent } =
   docBuilders;
 
 const handleProgram: NodePrinter<ProgramNode> = ({ path, print }) => [
-  group(path.map(print, "body"), { shouldBreak: true }),
-  softline,
+  join(line, path.map(print, "body").filter(Boolean)),
+  hardline,
 ];
 
 const handleElse: NodePrinter<AbstractNode> = () => {
   throw new Error("");
 };
 
+// const handleCondition: NodePrinter<Condition> = ({ path, print }) => [
+//   // group([
+//   "<#if ",
+//   // line,
+//   group(indent(indent([softline, path.call(print, "params")])), {
+//     shouldBreak: true,
+//   }),
+//   // indent([line, path.call(print, "params")]),
+//   // dedent([softline, ">", line]),
+//   ">",
+//   // line,
+//   // ]),
+//   // indent([line, join(softline, path.map(print, "consequent"))]),
+//   indent([line, path.map(print, "consequent")]),
+//   softline,
+//   dedent(["</#if>"]),
+// ];
+
 const handleCondition: NodePrinter<Condition> = ({ path, print }) => [
-  group([
-    "<#if",
-    group([line, indent(path.call(print, "params"))]),
-    dedent(">"),
-    group(indent([hardline, path.call(print, "consequent")])),
-    dedent([hardline, "</#if>"]),
-  ]),
+  // group([
+  "<#if ",
+  // line,
+  path.call(print, "params"),
+  // indent([line, path.call(print, "params")]),
+  // dedent([softline, ">", line]),
+  ">",
+  // line,
+  // ]),
+  // indent([line, join(softline, path.map(print, "consequent"))]),
+  indent([line, path.map(print, "consequent")]),
   softline,
+  dedent(["</#if>"]),
 ];
 
 const handleConditionElse: NodePrinter<AbstractNode> = () => {
@@ -74,7 +97,6 @@ const handleText: NodePrinter<TextNode> = ({ node }) => node.text.trim();
 
 const handleAssign: NodePrinter<Assign> = ({ path, print }) => [
   group(["<#assign ", path.call(print, "params"), "/>"]),
-  softline,
 ];
 
 const handleGlobal: NodePrinter<AbstractNode> = () => {

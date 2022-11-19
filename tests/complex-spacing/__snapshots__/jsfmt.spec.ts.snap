@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Format: complex-spacing.ftl: complex-spacing.ftl 1`] = `
+ <#if  someVar.someProp.subProp??   &&	someVar?has_content>
+ 		<p name="foo" class="classname">Text</p>
+				</#if>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<#if someVar.someProp.subProp?? && someVar?has_content>
+  <p name="foo" class="classname">Text</p>
+</#if>
+
+`;

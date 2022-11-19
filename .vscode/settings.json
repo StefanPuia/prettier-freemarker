@@ -1,7 +1,5 @@
 {
-  "cSpell.words": [
-    "freemarker"
-  ],
+  "cSpell.words": ["freemarker", "softline"],
   "editor.formatOnSave": true,
   "jestrunner.configPath": "jest.config.standalone.js"
 }

@@ -4,7 +4,7 @@ import { AbstractNode, Expression } from "./lib/freemarker.types";
 type NodePrinter<T extends AbstractNode | Expression> = (context: {
   node: T;
   options: Options;
-  print: any;
+  print: (node: any) => Doc[];
   path: AstPath<T>;
 }) => Doc;
 

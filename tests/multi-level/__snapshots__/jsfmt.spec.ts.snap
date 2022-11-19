@@ -1,23 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Format: assignments.ftl: assignments.ftl 1`] = `
-<#assign string   = " string example " /><#assign number =  1   />
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<#assign string = " string example "/>
-<#assign number = 1/>
-
-`;
-
-exports[`Format: complex-spacing.ftl: complex-spacing.ftl 1`] = `
- <#if  someVar.someProp.subProp??   &&	someVar?has_content>
- 		<p name="foo" class="classname">Text</p>
-				</#if>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-<#if someVar.someProp.subProp?? && someVar?has_content>
-  <p name="foo" class="classname">Text</p>
-</#if>
-
-`;
-
 exports[`Format: multi-level.ftl: multi-level.ftl 1`] = `
     <#assign someOtherVariable    =3/>
   <#if context.variable == "some string" &&
